@@ -42,3 +42,33 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 }
+
+android.publishing {
+    multipleVariants {
+        withSourcesJar()
+        withJavadocJar()
+        allVariants()
+    }
+}
+
+publishing {
+    publications {
+        register<MavenPublication>("release") {
+            groupId = "com.github.HimiMozumder"
+            artifactId = "DemoLibrary"
+            version = "1.0.2"
+
+            afterEvaluate {
+                from(components["release"])
+            }
+
+            pom {
+                name.set("BCL Common")
+                description.set("BCL Common Module")
+            }
+        }
+    }
+    repositories {
+        mavenLocal()
+    }
+}
